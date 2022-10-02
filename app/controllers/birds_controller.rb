@@ -1,4 +1,5 @@
 class BirdsController < ApplicationController
+  wrap_parameters format: []
 
   # GET /birds
   def index
@@ -20,6 +21,19 @@ class BirdsController < ApplicationController
     else
       render json: { error: "Bird not found" }, status: :not_found
     end
+  end
+
+  def create 
+    birds = Bird.create(bird_params)
+    render json: birds, status: :created
+    
+  end
+
+  private
+
+  def bird_params
+    params.permit(:name, :species)
+
   end
 
 end
